@@ -1,6 +1,5 @@
 import pickle
 import numpy as np
-import pandas as pd
 
 def load_models():
     with open("models/model_vec.pkl", "rb") as f:
@@ -12,8 +11,8 @@ def load_models():
     return vec,X
 
 def index_finder(query, vector, X):
-    Q = vec.transform([query])
-    query = query.toarray()
+    Q = vector.transform([query])
+    Q = Q.toarray()
 
     R = X @ Q.T
     R = R.flatten()

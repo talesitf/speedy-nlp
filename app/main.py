@@ -1,9 +1,12 @@
 from fastapi import FastAPI, Query
-import os
+import sys
 import uvicorn
 import pandas as pd
 
+sys.path.insert(0, 'scripts')
+
 from scripts import load_models, index_finder
+
 
 app = FastAPI()
 
@@ -20,13 +23,21 @@ def read_hello():
 @app.get("/query")
 def query_route(query: str = Query(..., description="Search query")):
 
-    indexes, results = index_finder(query, vec, X)
-    results = [f"title: {recipe['title']}, 'content': Ingredients: {recipe['ingredients']} Directions: {recipe['directions']}, relevance: {result}" for recipe, result in zip(indexes, results)]
+    results, indexes = index_finder(query, vec, X)
+    recipes = df.iloc[results]
+    titles = recipes['title'].values
+    ingredients = recipes['ingredients'].values
+    directions = recipes['directions'].values
+    print(recipes)
+
+    results = []
+    for i in range(len(titles)):
+        results.append({"title": titles[i], "content": {"ingredients": ingredients[i], "directions": directions[i]}, "score": indexes[i]})
     # TODO: write your code here, keeping the return format
     return {"results": results, "message": "OK"}
 
 def run():
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="localhost", port=8000, reload=True)
 
 if __name__ == "__main__":
     run()
