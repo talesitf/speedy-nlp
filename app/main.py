@@ -28,7 +28,6 @@ def query_route(query: str = Query(..., description="Search query")):
     titles = recipes['title'].values
     ingredients = recipes['ingredients'].values
     directions = recipes['directions'].values
-    print(recipes)
 
     results = []
     for i in range(len(titles)):
@@ -37,7 +36,7 @@ def query_route(query: str = Query(..., description="Search query")):
     return {"results": results, "message": "OK"}
 
 def run():
-    uvicorn.run("main:app", host="localhost", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=2323, reload=True)
 
 if __name__ == "__main__":
     run()
