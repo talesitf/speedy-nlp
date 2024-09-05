@@ -6,7 +6,7 @@ The workgroup is free to choose a theme of their liking. It is the responsabilit
 
 ```bash
 docker build -t nlp_aps1 .
-docker run -d -p 1515:8888 nlp_aps1
+docker run -d -p 2328:2328 nlp-talesitf
 ```
 
 ## Authors
