@@ -36,7 +36,7 @@ def query_route(query: str = Query(..., description="Search query")):
     return {"results": results, "message": "OK"}
 
 def run():
-    uvicorn.run("main:app", host="0.0.0.0", port=2328, reload=True)
+    uvicorn.run("main:app", host="localhost", port=2328, reload=True)
 
 if __name__ == "__main__":
     run()
